@@ -1,0 +1,98 @@
+Operating Sstem :
+        - Interface between user and hardware - Resource Allocator -  Manager for memory,file system, security etc...
+        Example : Printf() function internally calls system call for printing the data into the monitor or any display device.
+
+Goals :
+    primary : Convenience
+    Secondary : Efficiency
+
+Types of OS : 
+        1. Batch OS (Sequence of Jobs)
+        2. Multiprogramming (Without Preemption executing each process cpu time)
+        3. Multitasking (Extension for Multiprogramming with Preemption - Time Slicing)
+        4. Multiprocessing (Many cores)
+        5. Real Time (Deadlines are fixed for each process -  Military Application)
+
+Program - Something which resides in secondary memory  
+Process - Whenever a program has to execute, os will load the program into the main memory in a structure
+
+Attributes of a process: (Process Control Block)
+    1. Process ID (Number to represent)
+    2. Program Counter (Next Instruction address)
+    3. Process State (Ready, running, ...)
+    4. Priority (Process Priority)
+    5. General Purpose registers (Temporary Registers)
+    6. List of open files (To maintain consistency in file system)
+    7. List of open devices.( Resources that are used)
+    8. Protection. (Security)
+
+States of a process:                                                
+    1. New (SM)
+    2. Ready (MM)
+    3. Running (MM)
+    4. Block or wait (MM)
+    5. Termination or Completion
+    6. Suspend Ready (SM)
+    7. Suspend wait or suspend block (SM)
+
+Operations of a process:
+    1. Creation
+    2. Scheduling
+    3. Execution
+    4. Killing
+
+States of the process - Refer screeenshot
+
+Three types of Schedulers:
+    1. Long Term Scheduler (Responsible for which type of process has to be loaded in Ready queue - Should be mix of I/O and CPU)
+    2. Short Term Scheduler (Responsible for picking up a process from ready queue and alloting CPU for Execution)
+    3. Medium Term Scheduler (Responsible for swapping between main and secondary during suspend wait state)
+
+Dispatcher - After sts schedules process, it is left for dispatcher for performing context switching ( Priority suspension or Time Slicing)
+
+Reason for LTS for scheduling mix of I/O and CPU bound Process - To maximize throughput else the CPU will get thrashed (full I/O - idle and full CPU - 100% usage always)
+
+Important Parameters of processes:
+    1. Arrival Time (The time in which process comes from new state to ready state for execution -  Points in time)
+    2. Burst Time (The time during which the process gets executed - duration in Time)
+    3. Completion Time (The time at which the process gets completed - Points in Time)
+    4. Turn around Time (Difference between CT-AT)
+    5. Waiting Time (The time in which the process waits for I/O or Something - duration in time)
+    6. Response Time (The time at which the process get the CPU first - point in time)
+
+Scheduling Algorithms :
+    1. FCFS - First Come First Serve (Based on Arrival Time)
+        - Queue can be used.
+        - Convoy effect (Starvation of process with max burst time and minimal arrival time)
+        - Simplest Algorithm
+    2. SJF - Shortest Job First (Based on Burst Time)
+        - Min Heap can be used.
+        - Best and efficient algorithm (Maximum throughput and min average WT) but cannot be implemented as burst time cannot be predicted before.
+        - Some BT prediction strategies : 
+            1. Static - 1. process size (200KB process takes 20 units then, 201 KB process will also takes 20 units)
+                        2. process type (Various process types likes graphics,foreground,...)
+            2. Dynamic - 1. Simple Average (Average of previous process burst time)
+                         2. Exponential Average (previous process BT and previous process predicted BT)
+    3. SRTF - Shortest Remaining Time First (Minimum BT while stopping and checking each time TQ-1ms)
+    4. LRTF - Longest Remaining Time First (Maximum BT while stopping and checking each time TQ-1ms)
+    5. Round Robin (Works based on Time Quantum)
+        - Here all the process are not executed completely but executed for some units of time called Time quantum.
+        - Because of this Time Quantum, convoy effect can be eliminated.
+        - Data structure needed will be only queue.
+        - If TQ = infinity, then each process has to be completed and then next process is taken (Converting to FCFS)
+        - If TQ is more, Context switch will be less, Response Time will be more.
+    6. HRRN - Highest Response Ratio Next (Based on HRR value)
+        - HRR = WT+BT/BT
+        - This algorithm is not favourable not only for shortest jobs but also in waiting time.
+        - If Wt is more or BT is less, That process will gets executed as ratio will be higher in such case.
+    7. Priority - (Based on Priority)
+
+Multi level queue: (refer screenshot for diagram)
+    - Process are not put in one queue.
+    - They are grouped accordingly and separate queues are implemented where each queue will perform various scheduling algorithm.
+    - Problem will be if system process having higher priority is executing the other queue process are not stopped until it completes.
+
+Multi level feedback queue:
+    - Same as before but the process are transferred from below queue to the upper queue. (Picking up process depends on the implementation of the user)
+         
+

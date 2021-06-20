@@ -1,0 +1,330 @@
+PHP - Server Side Scripting
+    - Dynamic and interactive webpage
+    - Hypertext Preprocessor
+    - Runs on Apache local server
+    - Starts with <?php and ends with ?>
+    - Variable names are case sensitive.
+    - Keywords are case insensitive.
+    - version used 7
+    - Object Oriented Language makes it as DRY "Don't Repeat Yourself"
+
+Variable should start with $ sign.  $age=20;
+
+Types of variable scope:
+        Local scope
+        Global scope
+        Static scope
+
+Global scope:    Defined outside a function
+Local scope:    Deifined inside a function
+
+NOTE:
+    global keyword should be used to access global variables within a function.
+
+SuperGlobals:
+    These variables are readily available and can be used anywhere.
+
+    $GLOBALS:
+        Used to access global variables
+        PHP stores all global variables in an array $GLOBALS[index] where index holds name of the variable
+        $x = 10
+        $GLOBALS['x'];
+    
+    $_SERVER:
+        Holds information about headers,paths,and script locations
+        $_SERVER['PHP_SELF'];   - Returns filename of currently executing script
+        $_SERVER['REQUEST_METHOD']; - Returns the request method to access a page
+        $_SERVER['SERVER_NAME'];    - Returns the server name
+        $_SERVER['SERVER_ADDR'];    - Returns the server address
+
+    $_POST:
+        Used to collect form data after submitting form with method="POST"
+    
+    $_GET:
+        Used to collect form data after submitting form with method="GET"
+
+Constants with define keyword.       define('PI',3.14);
+
+Primitive DataTypes:
+    Intergers
+    NULL ( default value if not initialized)
+    float
+    Strings
+    Boolean
+
+To know datatype of a variable: use var_dump();
+    example:    $x = 10;
+                var_dump($x);   //int(10);
+
+Arrays:
+
+    $arr = array('apk','prem');
+    echo "val is".$arr[0];
+
+    Iteration through foreach:
+        foreach($arr as $i){
+            echo $i."<br>";
+        }
+
+    Creation of dictionary:
+
+        $arr = array('name' => $name,'rollno' => $roll);
+        foreach($arr as $key => $value){
+            echo $key." => ".$value;
+        }
+    
+    Array Concatenation:
+        $arr = array("apk","prem");
+        $name = array("hi");
+        $res = $arr + $name;
+
+    Associative arrays:
+        $emp = array("name" => "apk","roll" => "44");
+
+    Multidimensional Array:
+        $arr = array(array("1","2","3")
+                    array("4","5","6")
+                    array("7","8","9")
+                    )
+        for($i = 0; $i<3;$i++)
+        {
+            for($j=0;$j<3;$j++)
+            {
+                echo $arr[$i][$j];
+            }
+        }
+    
+    Sort Function:
+        $arr = array(1,2,3,10,7,8)
+        sort($arr); //sort
+        rsort($arr); //reverse_sort
+        arsort(); //Associative array sort in descending order based on value
+        ksort(); //Associative array sort in ascending order based on key
+        krsort(); //Associative array sort in descending order based on key
+
+Functions:
+    function add($num1,$num2)
+        return $num1+$num2;
+
+Since, PHP is loosely typed language we can assign any value to any variable without error.
+To perform type declaration, use strict keyword.
+
+declare(strict_types=1);
+add this in the beginning!
+
+
+Conditional(if,elseif,else),Ternary operator and loop statements(for,while,do..while) are default syntax as other languages!
+
+
+To display a message:   echo "Hello apk"; or print "Hello apk";
+    
+    Both are used to display message with difference:
+        echo has no return value but print returns 1
+        echo can take multiple parameters while print takes only one argument
+        echo is faster than print
+
+
+trim :  to remove empty spaces both left and right Side;
+rtrim :  only rightside
+ltrim : only rightside
+
+
+Date object:
+    h: 12 hour format
+    H: 24 hour format
+    i: Minutes
+    s: seconds
+    u: microseconds
+    a: Lowercase am or prem
+    I: Full text for the day
+    F: Full text month
+    j: day of the month
+    s: suffix
+    Y: year in 4 digit
+
+    echo date('h:i:s');
+
+FORM VALIDATION:
+
+    <?php
+        $name = $_POST['uname'];    where uname represents name attribute
+
+        echo "Username is". $name.'<br>';  where . represents separator
+
+        $str = <<<EOD
+        Hello $name how are you!
+        today you are going to learn PHP EOD;
+
+        // Like paragraph tag
+
+        For more refer IP record.
+
+        echo $str;
+    ?>
+
+ARITHMETIC OPERATIONS:
+
+        echo "5 + 2 =".(5+2); Any operations can be performed!
+
+SPACESHIP OPERATOR:
+    <=>
+    $x <=> $y // Returns -1 if $x<$y or 0 if equal or +1 if $x>$y
+
+Concatenation - .
+Concatenationa and assignment - .=
+
+
+
+TYPECAST:   echo " 5 / 2 =".(integer)(5/2);
+
+Reference to a number:
+    $num  = 10;
+    $val  = &$num;  // val will have num's value
+    $num = 100;
+    //Now the value of val = 100
+
+MySQLi :    i-improved
+
+    Ways to implement:
+        Object Oriented
+        Procedural
+        PDO - PHP Data Objects
+
+    Object Oriented :
+        $conn = new mysqli("dbhost","username","password","dbname","port","socket");
+    Procedural:
+        $conn = mysqli_connect("dbhost","username","password","dbname","port","socket");
+    
+    Query Execution:
+
+    Object Oriented:
+        $conn -> query("Select * from lab;");
+    Procedural:
+        mysqli_query($conn,"select * from lab;");
+
+    Connection close:
+
+    Object Oriented:
+        $conn -> close();
+    Procedural:
+        $conn_close();
+    
+    Check Connection:
+        $conn -> connect_errno
+            echo "failed to connect";
+            exit();
+    
+    Fetching result row as array:
+    
+    Object Oriented:
+        $result->$conn->query($sql);
+        $row = $result->fetch_array(MYSQLI_NUM);
+        printf("%s",$row[0]);
+
+        $row = $result->fetch_array(MYSQLI_ASSOC);
+        printf("%s",$row["uname"]);
+
+Cookies in PHP:
+
+    Definition: A cookie is used to identify a user. A cookie is a small file that the server embeds on the user's computer.
+                Each time the server requests a page on the browser, it will send the cookie too.
+
+    NOTE : setcookie should be at top of the document!
+
+    Syntax:
+        setcookie(name,value,expire,path,domain,secure,httponly);
+        *only name is required! Others are optional.
+    
+    $cook_name = "name";
+    $cook_val = "apk";
+
+    setcookie($cook_name,$cook_val,time()+(86400 * 10),"/");
+    //86400 - 1 day 
+
+    Retrieval of cookie value:
+        if(!isset($_COOKIE["cook_name"]))
+            echo "not set";
+        else
+            echo $cook_name;
+            echo $_COOKIE["name"];
+    
+    To check cookies are enabled:
+        if(count($_COOKIE)>0)
+            echo "enabled";
+    
+
+Session in PHP:
+
+    A session is a way to store information(in variables) to be used across multiple pages.
+    Unlike cookie, the information is not stored on the users computer. By default, session variables last until you close the browser.   
+
+    NOTE : Below command should be at the top of the document.
+
+    session_start();    // Starting the session
+    session_destroy();  // Destroying the session
+    session_unset();    // Destroying only session variables
+    $_SESSION["name"] = "apk";  //Setting up the session variables
+
+PHP Objects:
+
+    An object must be explicitly specified.
+
+    Access Specifiers - Public,Protected,Private
+
+    Inheritance - Only single inheritance allowed. For multiple inheritance use traits.(same as interface)
+
+    class Car {
+        public $name;   //Class properties
+        function Car(){
+            $this->name = "Renault";
+        }
+        //Constructor function starts with two underscores as for destructor also
+    }
+
+
+
+    $car_name  = new Car();
+
+    echo $car_name->name;
+
+PHP string functions:
+
+        strlen() - Returns length
+        str_word_count() - Returns number of words
+        strrev() - Reverses a string
+        strpos() - Returns character position if matches,else returns false
+                    example: echo strpos("hello apk","apk");
+        NOTE: First character in a string starts from 0
+        str_replace() - Replaces the specified character
+                        example: echo str_replace("apk","prem","Hello apk"); // Hello prem
+        
+Include in PHP:
+
+    Two types to include files:
+        include 'filename'; or require 'filename';
+    
+    difference between include and require is that if a file is not found, include will continue to execute
+    whereas require will stop executing the script.
+
+    Require will produce error whereas include will produce warning
+
+File read/write:
+        readfile("filename");   //will read the file contents and writes in the buffer
+
+        fopen("filename","method"); //method - r,w,r+,w+,a+
+        fclose(); //close the file
+
+        fread("filename","number of bytes to read");    //To read a specific amount of data
+
+        fgets();    // To read a single line
+
+        example:
+            $file = fopen("apk.txt","r");
+            echo fgets($file);
+            fclose($file);
+
+        feof(); //checks end of file
+
+        fgetc(); //Read a particular character
+
+        fwrite(); //Overwrites content of a file

@@ -1,0 +1,56 @@
+DeadLock :
+    DeadLock is a situation where a set of processes are blocked because each process is holding a resource
+    and waiting for another resource acquired by some other process.
+
+    Example : Consider two trains coming towards each other on same track and there is only one track, none of the  trains
+              can move.
+
+Necessary Conditions DeadLock:
+    1. Mutual Exclusion (Only one process can use at a time)
+    2. Hold and Wait (Process holds some resource)
+    3. No Preemption (CPU/Resource cannot be taken from a process)
+    4. Circular Wait (A set of processes waiting in Circular form)
+
+Refer state graph in Screenshot
+
+Starvation - Means Long wait
+DeadLock - Infinite Wait
+
+Minimum number of resources needed such that process will not fall into deadlock.
+    3 Process wants 2 instances of resource each.
+    Then giving 4 resources to the process will not cause deadlock since one process can complete its execution and free its resource.
+    But then 3 resources and below will definitely cause deadlock.
+
+Refer Screenshot for more clarity.
+
+Deadlock Handling Mechanism : 
+    Deadlock Ignorance (Ignore the deadlock - Windows and Linux will use this. Whenever the deadlock occurs, the system will get halt)
+        - Ostrich Approach - Whenever sandstorm comes Ostrich will bend their head and touch & close its eyes.Acting like there is no sandstorm.
+        - Since machine is for personal use, ppl will need faster performance than safe performance 
+    DeadLock Prevention (Preventing the Conditions of deadlock earlier)
+        - Mutual Exclusion - Spool Everything (Spool the jobs in a queue but then the process compete to get the queue)
+        - Hold and Wait - Request all resources Initially (But then we cannot predict the resources before)
+        - No Preemption - Take resources away (But then if we preempt the task done by the process from which we are removing resource is incomplete)
+        - Circular wait - Order resource numerically in increasing order (Like P1 can hold and request for n>=1 but not less than 1)
+        - Out of all the four, we can implement Circular wait practically.
+    DeadLock Avoidance (Banker's Algorithm)
+        - Has Safe State (When processes are executed in this order, we can be sure that there will be no deadlock) and Unsafe State (We are not sure that this might lead to deadlock)
+    DeadLock Detection and Recovery (Resource Allocation Graph)
+        - Vertices 
+            * Process Vertex
+            * Resource Vetex
+                1. Single Instance
+                2. Multi Instance
+        - Edges
+            1. Assign Edge
+            2. Request Edge
+
+    refer screenshot for clarity.
+
+    Note : In single instance, Whenever we come across cycle, we can be sure that it has deadlock.
+           But in multi instance, the presence of cycle results in may or may not have deadlock. (Thus, we follow safety or bankers algorithm for checking of safe state)
+    
+    Recovery : 
+        Preemption
+        rollback
+        Kill one / Kill all 

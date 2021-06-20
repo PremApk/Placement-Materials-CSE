@@ -1,0 +1,22 @@
+System Calls:
+    Whenever we need service or support from the resource/hardware, the user process cannot direclty interact with the resource. Thus, it need to request the OS through system call.
+    A system call is a way to interact with the operating system (or) Interface between process and operating system to allow user level processes to request service from the operating system.
+    
+    A process can call (or) invoke system calls directly or indirectly. 
+    indirectly - For example we use library file printf in c program which inturn indirectly calls write system call to display the output in monitor.
+
+    Types of System Calls:
+        1.Process Control
+        2.File Manipulation
+        3.Device Manipulation
+        4.Information Maintanence
+        5.Communications
+    
+    refer screenshots for indepth clarity
+
+    GeeksforGeeks - https://www.geeksforgeeks.org/introduction-of-system-call/#:~:text=System%20call%20provides%20the%20services,points%20into%20the%20kernel%20system.
+
+    Fork() and exec():
+        Process are created using fork system calls.
+        Child and Parent will have different Process but has duplication of all data.
+        On successful creation, fork() returns PID of the child process.

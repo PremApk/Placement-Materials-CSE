@@ -1,0 +1,130 @@
+Process Synchronization Need :
+    Whenever process communicate each other - If they want to access same resource simutaneously.
+        p1 :                        p2:
+            1: MOV R0,COUNT             1: MOV R1,COUNT
+            2: INC COUNT                2: DEC COUNT
+            3: MOV R0,COUNT             3: MOV R1,COUNT
+
+Critical Section: Part of the program where shared resource is available
+
+Race Condition : Order of execution of instruction decide the results.
+
+To avoid multiple process to access Critical section, we are writing Synchronization mechanisms (Which will allow only one process).
+
+One before cs -> Entry section
+One after cs -> Exit section
+
+Requirements for Synchronization mechanisms:
+    Primary : 1.Mutual Exclusion
+              2.Progress
+    Secondary : 1.Bounded Wait
+                2. Architecture Neutrality or Portability
+
+Example : Dressing room as CS. If one person enters the cs, then another person should not enter cs. (ME)
+          If one person does not want to use dressing room but stops the another person who wants cs. (P)
+          The dressing room should be given to all people. if one person enters 10 times, another person should enter atleast one time. Wait for bounded time interval (BW)
+          The solution should work for all dressing room not only for particular room. (AN).
+
+Types of Synchronization mechanisms:
+    Busy Waiting  (If one person is using dressing room, the other person continuously knocks the door)
+    No Busy Waiting (If one person is using dressing room, then the other person goes to sleep and the previous person signal him on completion).
+
+User Mode : If the program does'nt want OS support for execution.
+Kernel Mode : If the program want OS support for execution.
+
+
+Synchronization Mechanism :
+Busy Waiting Mechanisms:
+    1. Lock Variable
+            It can be used in user mode.
+            Busy waiting solution.
+            Can be used for more than one process.
+
+            while(LOCK != 0);   (Preemption after while results failure of ME)
+                LOCK = 1
+                CS
+                LOCK = 0
+                NCS
+            
+        Example : Consider a dressing room with a tag(lock variable), if one person enters he will remove and put tag as occupied.
+                  Then the next person check the tag and continuously knocks the door.
+
+        Failure : It fails in certain case like if one person checks and when he tries to enter the room, one person called him(Preemption)
+                  At that time another person sees the tag as vacant and enters the room. And first person on return, blindly enters the room without checking the tag.
+    
+        LOAD R0,LOCK            LOAD R0,LOCK                
+        CMP R0,#0               STORE #1,LOCK
+        JNZ STEP1               CMP R0,#0
+        STORE LOCK,#1           JNZ STEP1
+
+        Problem with lock is that we are not storing the value immediately(Code 1). But if we are trying to store at that Preemption takes place(Code 2).
+        Thus, Load and store instruction should be atomic. (TSL R0,LOCK) TSL - Test Set Lock
+
+    *PRIORITY INVERSION - When a low Priority process enters the CS and another process having higher Priority wants cs.
+                          The scheduler will preempt p1 and puts in ready queue. When the process p2 enters, it got blocked in the entry section.
+                          The process p2 needs cs but p1 has cs and p1 wants cpu to finish execution but p2 has cpu. - "SPIN LOCK"
+    
+    2. Disabling Interrupts: (BW cannot be guaranteed)
+        Whenever one process enters the CS, we are disabling the Interrupt so that no process can request for CS.
+        But giving interrupt control to the user application is dangerous. (This method is not recommended)
+    
+    4. Strict Alternation or Turn Variable: (Progress is not satisfied)
+            It can be used in user mode.
+            Busy Waiting solution.
+            Can be used for two process.
+
+            while(turn != 0);                       while(turn != 1);
+                CS                                      CS
+                turn = 1                                turn = 0
+                NCS                                     NCS
+        
+        Example : The dressing room will have a lock. The room key will be available only to one user. He can finish his/her job and then pass the key to other.
+                  But if the person does not want to enter dressing room and he will not pass the key to anyone until he/she finishes his job.
+
+            Solution will be use of Interested array of size two. (BW is not satisfied)
+
+                Interested[0] = T                                   Interested[1] = T
+                while(Interested[1] == T);                          while(Interested[0] == T);
+                    CS                                                      CS
+                    Interested[0] = F                                       Interested[1] = F
+
+                But here to if we preempt with Interested[0] and Interested[1] as True, then deadlock will occur.
+    
+    5. Peterson's Solution: (Implementation of both Interested and turn):
+            Applicable only for two process.
+            First Synchronization mechanism that satisfies all the four conditions.
+            It follows strict Alternation.
+            Refer code in screenshot.
+
+Without Busy Waiting Mechanism:
+        If we use busy waiting mechanism, CPU cycles will be wasted unnecessarily but in this approach, if one process is using cs, the other process goes to sleep.
+        With this approach Priority Inversion can be eliminated by assigning low Priority process to sleep and giving high priority process cs.
+    
+    1. Producer - Consumer Problem:
+        Here two process will do different work: One will prepare an item and other will consume that item.
+        The prepared items are held in buffer. Whenever the buffer is full producer will goes to sleep and consumer will consume the item and it will wake producer again.
+        This method fails when we preempt the consumer before executing sleep. In that case producer will think that consumer is sleeping and it will give signal and goes to sleep.
+        But consumer after certain time comes and goes back to sleep. Thus both will sleep forever.
+
+        Refer code in screenshot.
+    
+        Solution : Check whether the consumer is sleeping or not. (Introduce a bit which tells whether it should sleep or not)
+                   Maintaining this variable for multiple process results in semaphore. (Introduced by dijikstra)
+    
+    2. Semaphore : 
+            Variable on which read,modify and update happens atomically in kernel mode. Two modes : 1.Counting Semaphore 2. Binary Semaphore.
+
+            Counting Semaphore : 
+                This is merely a structure that has structure members as variable and queue.
+                Whenever a process enters the cs, it decrements the semaphore variable and it keeps on decrementing until it reaches 0. (Limit depends on shared resource instance capability)
+                Whenever limit exceeds, semaphore will get negative value and the pcb of upcoming process are queued up so that bounded wait can be achieved.
+                If the process completes the exceution, it signal(down) the sempahore variable and the process in the queue is taken for cs execution.
+
+                refer code in screenshot.
+            
+            Binary Semaphore :
+                The Binary semaphore results in Mutal Exclusion. At a time only one process can enter the cs. The variable value can be 1 or 0. If 0 put the pcb in queue.
+
+                refer code in screenshot.
+
+    3. Mutex: 

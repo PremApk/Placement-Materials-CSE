@@ -1,0 +1,40 @@
+File Systems:
+    A file is a collection of related information that is recorded on secondary storage. 
+    Or file is a collection of logically related entities. 
+    From user’s perspective a file is the smallest allotment of logical secondary storage.
+
+File Attributes & File Operations:
+    Refer Screenshot
+
+Information required for accessing a file:
+    1. File Pointer
+    2. File open count
+    3. Disk location of a file
+    4. Access rights
+
+Per Process Table:
+    Each process is created with a table called per process table where the filename along the file pointer and access rights are allocated.
+
+Global File Table:
+    For entire processes, one common table that has file Attributes for all files like file location and file open count.
+
+Entry in per process table is deleted after completion but not in global file table.
+Entry in global file table will be deleted only if the file open count is zero.
+
+Access Methods:
+    1. Sequential Access
+    2. Direct Access
+    3. Indexed Access (Usage of multi level indexing)
+
+We will have more than one file system, when we go for multiple operating system in a computer.
+
+Entire harddisk is divided into various partitions or minidisk or volume.
+Each partition will have their own file system.
+Each file system will have its own directory structure.
+
+Directories:
+    Collection of files is a file directory.
+    The directory contains information about the files, including attributes, location and ownership.
+    Much of this information, especially that is concerned with storage, is managed by the operating system.
+    The directory is itself a file, accessible by various file management routines.
+

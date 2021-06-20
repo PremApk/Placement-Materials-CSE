@@ -1,0 +1,145 @@
+Setting the nth bit
+x | (1<<n)
+
+Clearing the nth bit
+x & ~(1<<n)
+
+Toggle nth bit
+x ^ (1<<n)
+
+Rounding to the next power of two
+unsigned int v; //only works if v is 32 bit
+v--;
+v |= v >> 1;
+v |= v >> 2;
+v |= v >> 4;
+v |= v >> 8;
+v |= v >> 16;
+v++;
+
+Getting the size of an integer
+int maxInt = ~(1 << 31);
+int maxInt = (1 << 31) - 1;
+int maxInt = (1 << -1) - 1;
+
+Getting the minimum integer
+int minInt = 1 << 31;
+int minInt = 1 << -1;
+
+Getting the size of an long
+long maxLong = ((long)1 << 127) - 1;
+
+Multiplication by 2
+n << 1;
+
+Division by 2
+n >> 1;
+
+Multiplication by the mth power of 2
+n << m;
+
+Division by mth power 2
+n >> m;
+
+Equality check
+(a^b) == 0; // a == b
+
+Parity check
+(n & 1) == 1;
+
+Exchange of values
+a ^= b;
+b ^= a;
+a ^= b;
+
+The absolute value of a number
+//version 1
+x < 0 ? -x : x;
+
+//version 2
+(x ^ (x >> 31)) - (x >> 31);
+
+Maximum of two numbers
+b & ((a-b) >> 31) | a & (~(a-b) >> 31);
+
+Minimum of two numbers
+a & ((a-b) >> 31) | b & (~(a-b) >> 31);
+
+Checking for the same sign
+(x ^ y) >= 0;
+
+Sign change
+i = ~i + 1; // or
+i = (i ^ -1) + 1; // i = -i
+
+Calculating 2 ^ n
+2 << (n-1);
+
+Check for degree 2
+n > 0 && (n & (n - 1)) == 0;
+
+Remainder of 2 ^ n divided by m
+m & (n - 1);
+
+Average
+(x + y) >> 1;
+((x ^ y) >> 1) + (x & y);
+
+Getting the mth bit n (from right to left)
+(n >> (m-1)) & 1;
+
+Setting the mth bit n (from right to left)
+n & ~(1 << (m-1));
+
+Checking the nth bit
+if (x & (1<<n)) {
+n-th bit is set
+}
+else {
+n-th bit is not set
+}
+
+Selecting the rightmost 1
+x & (-x)
+
+Selecting the rightmost 0
+~x & (x+1)
+
+Change the rightmost 0 to 1
+x | (x+1)
+
+n+1
+-~n
+
+n-1
+~-n
+
+if (x==a) x=b; if (x==b) x=a;
+x = a ^ b ^ x;
+
+STRINGS---------------------------------------------------------
+
+Convert letter to lowercase
+(x | ' ')
+//Result is always lowercase even if letter is already lowercase
+
+Converting a letter to uppercase
+(x & '_')
+Result is always uppercase even if letter is already uppercase
+
+Change the case of a letter
+(x ^ ' ')
+//eg. ('a' ^ ' ') => 'A' ; ('A' ^ ' ') => 'a'
+
+Letter`s number in the alphabet
+(x & "\x1F")
+//Result is in 1..26 range, letter case is not important
+//eg. ('a' & "\x1F") => 1 ; ('B' & "\x1F") => 2
+
+Capital`s letter number in alphabet
+(x & '?')
+(x ^ '@')
+//eg. ('C' & '?') => 3 ; ('Z' ^ '@') => 26
+
+Lowercase letter number in alphabet
+(x ^ ' ' ) //eg. ('d' ^ '') => 4 ; ('x' ^ '`') => 25

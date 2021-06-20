@@ -1,0 +1,39 @@
+Version Control Management System:
+    -Centralized Version  Control System:
+        In this case, all the version are located in a one common server and the users can access the remote server!
+        Disadvantage is that there is no reliablilty and if permission are blocked, you cannot access it.
+    
+    -Distributed Version Control System:
+        All the users will have local repository so that reliablilty can be maintained!
+        Example : Git
+
+Stages in Git:
+    -  Working Directory (Not Tracked files)
+    -  Staging Area (In queue for commit)
+    -  Repository (In local Repository committed files)
+    
+Git commands:
+
+    git --version                                                               ---->             Version check
+    git config --global user.name "premapk"                                     ---->             Setting up on config values (Username)
+    git config --global user.email "apkrockz@gmail.com"                         ---->             Setting up on config values (Email ID)
+    git config --list                                                           ---->             Listing up the config values
+    git help <verb>  or git <verb> help                                         ---->             To find help! verb can be config,add
+    git init                                                                    ---->             To track a repository or initializing a repository from existing code
+    touch .gitignore                                                            ---->             Add file name in this file so that it can omit commit for this files 
+    git status                                                                  ---->             List files that are to be commited and that are not tracked!
+    git add -A (all files) or git add filename                                  ---->             Will add file to the staging area
+    git reset filename or git reset (All files)                                 ---->             remove file from staging area
+    git commit -m "Message for commit"                                          ---->             To commit 
+    git log                                                                     ---->             Gives hash,author,commit message on commit
+    git clone <url> <where to clone>                                            ---->             To clone a existing repository from github etc..
+    git remote -v or git branch -a                                              ---->             To view information in the cloned repository
+    git diff                                                                    ---->             To view the difference between modified and original Repository
+    git pull origin <branch name>                                               ---->             To pull all the modified data 
+    git push origin <branch name>                                               ---->             To push into main repository     
+    git checkout <branch name>                                                  ---->             To switch between branches
+    git branch <branch name>                                                    ---->             To create a new branch
+    git push -u origin <branch name>                                            ---->             Push our branch to remote branch
+    git branch -a                                                               ---->             List out all the branch details
+    git merge <branch name>                                                     ---->             To merge the branch with master
+    git branch --merged                                                         ---->             List all the branches that have been merged
